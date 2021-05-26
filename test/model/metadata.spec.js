@@ -131,6 +131,21 @@ describe('Metadata', function () {
     })
   })
 
+  describe('title', function () {
+    it('is read from EXIF', function () {
+      const exiftool = fixtures.exiftool()
+      exiftool.EXIF.DocumentName = 'some document name'
+      const meta = new Metadata(exiftool)
+      should(meta.title).eql('some document name')
+    })
+
+    it('can be missing', function () {
+      const exiftool = fixtures.exiftool()
+      const meta = new Metadata(exiftool)
+      should(meta.title).undefined()
+    })
+  })
+
   describe('caption', function () {
     it('is read from all standard EXIF/IPTC/XMP tags', function () {
       const tags = [
