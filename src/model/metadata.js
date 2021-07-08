@@ -25,6 +25,7 @@ class Metadata {
   constructor (exiftool, picasa, opts) {
     // standardise metadata
     this.date = getDate(exiftool)
+    this.title = title(exiftool)
     this.caption = caption(exiftool, picasa)
     this.keywords = keywords(exiftool, picasa)
     this.people = people(exiftool)
@@ -76,6 +77,10 @@ function getFilenameDate (exif) {
     if (parsed.isValid()) return parsed
   }
   return null
+}
+
+function title (exif) {
+  return tagValue(exif, 'EXIF', 'DocumentName')
 }
 
 function caption (exif, picasa) {
